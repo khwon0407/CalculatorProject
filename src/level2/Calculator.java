@@ -9,7 +9,7 @@ public class Calculator {
     List<Integer> resultCollection = new ArrayList<Integer>();
 
     //TODO 1. 사칙연산을 수행 후, 결과값 반환 메서드 구현
-    public Optional<Integer> calculate(int first, int second, char op) throws ArithmeticException {
+    public Optional<Integer> calculate(int first, int second, char op) {
         Integer result = null;
         Optional<Integer> resultOptional;
 
