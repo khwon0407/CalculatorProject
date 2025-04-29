@@ -16,8 +16,7 @@ public class CalculatorLv2 {
         Integer result;
         Optional<Integer> resultOptional;
 
-        String exit;
-
+        String exit, remove;
 
         while (true) {
 
@@ -29,12 +28,23 @@ public class CalculatorLv2 {
             second = scanner.nextInt();
 
             System.out.print("사칙연산 기호를 입력해주세요: ");
-            opStr = scanner.next();
-            op = opStr.charAt(0);
+            op = scanner.next().charAt(0);
 
             resultOptional = calculator.calculate(first, second, op);
-            resultOptional.ifPresent(integer -> System.out.println("계산 결과: " + integer));
-            
+            if(resultOptional.isPresent()) {
+                Integer realResult = resultOptional.get();
+                System.out.println("계산 결과: " + realResult);
+                calculator.setResultCollection(realResult);
+            }
+            System.out.println("현재 저장 중인 값들의 목록: " + calculator.getResultCollection());
+
+            System.out.print("현재 저장되어 있는 결과값 중 가장 오래된 값을 지우겠습니까? 원할 경우 yes를 입력해주세요: ");
+            remove = scanner.next();
+
+            if(remove.equals("yes")) {
+                calculator.removeResult();
+            }
+
             System.out.print("종료를 원하면 exit을 입력해주세요. 그렇지 않을 경우, 아무 문자나 입력해주세요: ");
             exit = scanner.next();
 
