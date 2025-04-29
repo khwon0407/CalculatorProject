@@ -1,5 +1,6 @@
 package level2;
 
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -22,13 +23,22 @@ public class CalculatorLv2 {
 
             result = null;
 
-            System.out.print("첫 번째 양의 정수(0 포함)를 입력해주세요: ");
-            first = scanner.nextInt();
-            System.out.print("두 번째 양의 정수(0 포함)를 입력해주세요: ");
-            second = scanner.nextInt();
+            try {
+                //TODO 1. 양의 정수(0 포함)을 입력받기
+                System.out.print("첫 번째 양의 정수(0 포함)를 입력해주세요: ");
+                first = scanner.nextInt();
+                System.out.print("두 번째 양의 정수(0 포함)를 입력해주세요: ");
+                second = scanner.nextInt();
 
-            System.out.print("사칙연산 기호를 입력해주세요: ");
-            op = scanner.next().charAt(0);
+                //TODO 2. 사칙연산 기호 (+, -, *, /) 입력받기
+                System.out.print("사칙연산 기호를 입력해주세요: ");
+                opStr = scanner.next();
+                op = opStr.charAt(0);
+            } catch (InputMismatchException e) {
+                System.out.println("잘못된 입력입니다. 프로그램을 다시 시작합니다.");
+                scanner.nextLine();
+                continue;
+            }
 
             resultOptional = calculator.calculate(first, second, op);
             if(resultOptional.isPresent()) {
