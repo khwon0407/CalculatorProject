@@ -93,6 +93,6 @@ public class ArithmeticCalculator {
 
     //TODO 3. filter와 lambda를 활용하여 특정 수보다 큰 결과값을 모두 불러오는 기능
     public List<Number> getMoreThanNum(double cmp) {
-        return resultCollection.stream().filter(a -> a.doubleValue() >= cmp).collect(Collectors.toList());
+        return resultCollection.stream().filter(num -> num.doubleValue() > cmp).collect(Collectors.toList());
     }
 }
