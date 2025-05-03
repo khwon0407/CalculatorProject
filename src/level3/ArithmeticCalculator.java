@@ -58,6 +58,11 @@ public class ArithmeticCalculator {
         }
 
         resultOptional = Optional.ofNullable(result);
+
+        if(resultOptional.isPresent()) {
+            this.resultCollection.add(result); //계산 결과 저장
+        }
+
         return resultOptional;
     }
 
@@ -75,12 +80,24 @@ public class ArithmeticCalculator {
         }
     }
 
+    public Number getResult(int idx) throws Exception {
+        try {
+            return this.resultCollection.get(idx);
+        } catch (IndexOutOfBoundsException e) {
+            throw new Exception();
+        }
+    }
+
     public List<Number> getResultCollection() {
         return resultCollection;
     }
 
-    public void setResultCollection(Number number) {
-        this.resultCollection.add(number);
+    public void setResultCollection(int idx, Number number) throws Exception {
+        try {
+            this.resultCollection.set(idx, number);
+        } catch (IndexOutOfBoundsException e) {
+            throw new Exception();
+        }
     }
 
     public void removeResult() {

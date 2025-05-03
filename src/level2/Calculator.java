@@ -36,6 +36,11 @@ public class Calculator {
         }
 
         resultOptional = Optional.ofNullable(result);
+
+        if(resultOptional.isPresent()) {
+            this.resultCollection.add(result); //계산 결과 저장
+        }
+
         return resultOptional;
     }
 
@@ -43,8 +48,20 @@ public class Calculator {
         return resultCollection;
     }
 
-    public void setResultCollection(Integer number) {
-        this.resultCollection.add(number);
+    public Integer getResult(int idx) throws Exception {
+        try {
+            return this.resultCollection.get(idx);
+        } catch (IndexOutOfBoundsException e) {
+            throw new Exception();
+        }
+    }
+
+    public void setResultCollection(int idx, Integer number) throws Exception {
+        try {
+            this.resultCollection.set(idx, number);
+        } catch (IndexOutOfBoundsException e) {
+            throw new Exception();
+        }
     }
 
     //TODO 4. Calculator 클래스에 저장된 연산 결과들 중 가장 먼저 저장된 데이터를 삭제하는 기능을 가진 메서드를 구현

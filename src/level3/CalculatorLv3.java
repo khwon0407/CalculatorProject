@@ -65,9 +65,46 @@ public class CalculatorLv3 {
             if(resultOptional.isPresent()) {
                 Number realResult = resultOptional.get();
                 System.out.println("계산 결과: " + realResult);
-                calculator.setResultCollection(realResult);
             }
             System.out.println("현재 저장 중인 값들의 목록: " + calculator.getResultCollection());
+
+            //TODO. Getter 활용
+            try {
+                int idx;
+                System.out.print("현재 저장되어 있는 결과값 중 보고 싶은 차례의 인덱스를 입력해주세요: ");
+                idx = scanner.nextInt();
+                System.out.println("해당 결과 값은 " + calculator.getResult(idx) + "입니다.");
+            } catch (InputMismatchException ex) {
+                System.out.println("잘못된 입력입니다.");
+            } catch (Exception e) {
+                System.out.println("범위를 벗어났습니다.");
+            }
+
+            //TODO. Setter 활용
+            try {
+                int idx;
+                String tempStr;
+                Number temp;
+                System.out.print("현재 저장되어 있는 결과값 중 고치고 싶은 차례의 인덱스를 입력해주세요: ");
+                idx = scanner.nextInt();
+                System.out.print("어떤 값으로 고치고 싶은지 입력해주세요: ");
+                tempStr = scanner.next();
+                if(ArithmeticCalculator.isIntDouble(tempStr) == 1) {
+                    temp = Integer.parseInt(tempStr);
+                    calculator.setResultCollection(idx, temp);
+                    System.out.println("수정된 값은 " + calculator.getResult(idx) + "입니다.");
+                } else if(ArithmeticCalculator.isIntDouble(tempStr) == 2) {
+                    temp = Double.parseDouble(tempStr);
+                    calculator.setResultCollection(idx, temp);
+                    System.out.println("수정된 값은 " + calculator.getResult(idx) + "입니다.");
+                } else {
+                    System.out.println("잘못된 입력입니다.");
+                }
+            } catch (InputMismatchException ex) {
+                System.out.println("잘못된 입력입니다.");
+            } catch (Exception e) {
+                System.out.println("범위를 벗어났습니다.");
+            }
 
             //삭제 기능 테스트
             System.out.print("현재 저장되어 있는 결과값 중 가장 오래된 값을 지우겠습니까? 원할 경우 yes를 입력해주세요: ");
@@ -75,6 +112,7 @@ public class CalculatorLv3 {
             if(remove.equals("yes")) {
                 calculator.removeResult();
             }
+            System.out.println("현재 저장 중인 값: " + calculator.getResultCollection());
 
             //특정 수 보다 큰 수 테스트
             try {

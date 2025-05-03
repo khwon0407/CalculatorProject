@@ -39,10 +39,36 @@ public class CalculatorLv2 {
             if(resultOptional.isPresent()) {
                 Integer realResult = resultOptional.get();
                 System.out.println("계산 결과: " + realResult);
-                //계산 결과는 계산기 내부의 Collection에 저장됨
-                calculator.setResultCollection(realResult);
             }
             System.out.println("현재 저장 중인 값들의 목록: " + calculator.getResultCollection());
+
+            //TODO. Getter 활용
+            try {
+                int idx;
+                System.out.print("현재 저장되어 있는 결과값 중 보고 싶은 차례의 인덱스를 입력해주세요: ");
+                idx = scanner.nextInt();
+                System.out.println("해당 결과 값은 " + calculator.getResult(idx) + "입니다.");
+            } catch (InputMismatchException ex) {
+                System.out.println("잘못된 입력입니다.");
+            } catch (Exception e) {
+                System.out.println("범위를 벗어났습니다.");
+            }
+            
+            //TODO. Setter 활용
+            try {
+                int idx;
+                Integer temp;
+                System.out.print("현재 저장되어 있는 결과값 중 고치고 싶은 차례의 인덱스를 입력해주세요: ");
+                idx = scanner.nextInt();
+                System.out.print("어떤 값으로 고치고 싶은지 입력해주세요: ");
+                temp = scanner.nextInt();
+                calculator.setResultCollection(idx, temp);
+                System.out.println("수정된 값은 " + calculator.getResult(idx) + "입니다.");
+            } catch (InputMismatchException ex) {
+                System.out.println("잘못된 입력입니다.");
+            } catch (Exception e) {
+                System.out.println("범위를 벗어났습니다.");
+            }
 
             System.out.print("현재 저장되어 있는 결과값 중 가장 오래된 값을 지우겠습니까? 원할 경우 yes를 입력해주세요: ");
             remove = scanner.next();
@@ -51,6 +77,7 @@ public class CalculatorLv2 {
                 //삭제를 원하면 삭제 이행
                 calculator.removeResult();
             }
+            System.out.println("현재 저장 중인 값: " + calculator.getResultCollection());
 
             System.out.print("종료를 원하면 exit을 입력해주세요. 그렇지 않을 경우, 아무 문자나 입력해주세요: ");
             exit = scanner.next();
