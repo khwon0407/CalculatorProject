@@ -1,41 +1,54 @@
-package level2;
+package level3;
 
 import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class CalculatorLv2 {
+public class CalculatorLv3 {
     public static void main(String[] args) {
-        //TODO 2. Lv 1에서 구현한 App 클래스의 main 메서드에 Calculator 클래스가 활용될 수 있도록 수정
         Scanner scanner = new Scanner(System.in);
-        Calculator calculator = new Calculator();
+        ArithmeticCalculator calculator = new ArithmeticCalculator();
+        OperatorType operatorType;
 
-        int first, second;
+        String first, second;
         String opStr;
         char op;
-        Optional<Integer> resultOptional;
+        double cmp;
+
+        Optional<Number> resultOptional;
 
         String exit, remove;
 
         while (true) {
             try {
                 System.out.print("첫 번째 양의 정수(0 포함)를 입력해주세요: ");
-                first = scanner.nextInt();
+                first = scanner.next();
                 System.out.print("두 번째 양의 정수(0 포함)를 입력해주세요: ");
-                second = scanner.nextInt();
+                second = scanner.next();
 
                 System.out.print("사칙연산 기호를 입력해주세요: ");
                 opStr = scanner.next();
                 op = opStr.charAt(0);
+
             } catch (InputMismatchException e) {
                 System.out.println("잘못된 입력입니다. 프로그램을 다시 시작합니다.");
                 scanner.nextLine();
                 continue;
             }
 
-            resultOptional = calculator.calculate(first, second, op);
+            operatorType = OperatorType.fromChar(op);
+            if(ArithmeticCalculator.isInteger(first) && ArithmeticCalculator.isInteger(second)) {
+                Integer firstInt = Integer.parseInt(first);
+                Integer secondInt = Integer.parseInt(second);
+                resultOptional = calculator.calculate(firstInt, secondInt, operatorType);
+            } else {
+                Double firstDouble = Double.parseDouble(first);
+                Double secondDouble = Double.parseDouble(second);
+                resultOptional = calculator.calculate(firstDouble, secondDouble, operatorType);
+            }
+
             if(resultOptional.isPresent()) {
-                Integer realResult = resultOptional.get();
+                Number realResult = resultOptional.get();
                 System.out.println("계산 결과: " + realResult);
                 calculator.setResultCollection(realResult);
             }
@@ -47,6 +60,10 @@ public class CalculatorLv2 {
             if(remove.equals("yes")) {
                 calculator.removeResult();
             }
+
+            System.out.print("결과값 중 특정 수 보다 큰 결과값을 봅니다. 특정 수를 입력해주세요: ");
+            cmp = scanner.nextDouble();
+            System.out.println("찾는 값의 목록: " + calculator.getMoreThanNum(cmp));
 
             System.out.print("종료를 원하면 exit을 입력해주세요. 그렇지 않을 경우, 아무 문자나 입력해주세요: ");
             exit = scanner.next();
