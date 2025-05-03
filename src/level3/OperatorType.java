@@ -1,5 +1,6 @@
 package level3;
 
+//TODO 1. Enum을 활용하여 코드 작성
 public enum OperatorType {
     PLUS, MINUS, MULTI, DEVIDE, WRONG;
 

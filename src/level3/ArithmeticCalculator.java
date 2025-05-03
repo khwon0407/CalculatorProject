@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 public class ArithmeticCalculator {
     private List<Number> resultCollection = new ArrayList<>();
 
-    public <S> Optional<S> calculate(S first, S second, OperatorType op) {
+    //TODO 2. generic을 활용하여 정수와 실수 모두에 대응되는 calculate 메서드 작성
+    public <S extends Number> Optional<S> calculate(S first, S second, OperatorType op) {
         S result = null;
         Optional<S> resultOptional;
 
@@ -60,12 +61,17 @@ public class ArithmeticCalculator {
         return resultOptional;
     }
 
-    public static boolean isInteger(String numStr) {
+    public static int isIntDouble(String numStr) {
         try {
             Integer.parseInt(numStr);
-            return true;
+            return 1;
         } catch (NumberFormatException e) {
-            return false;
+            try {
+                Double.parseDouble(numStr);
+                return 2;
+            } catch (NumberFormatException ex) {
+                return 0;
+            }
         }
     }
 
@@ -78,10 +84,14 @@ public class ArithmeticCalculator {
     }
 
     public void removeResult() {
-        resultCollection.remove(0);
+        try {
+            resultCollection.remove(0);
+        } catch(IndexOutOfBoundsException e) {
+            System.out.println("저장된 계산 결과 값이 없습니다.");
+        }
     }
 
-    //TODO. filter와 lambda를 활용하여 특정 수보다 큰 결과값을 모두 불러오는 기능
+    //TODO 3. filter와 lambda를 활용하여 특정 수보다 큰 결과값을 모두 불러오는 기능
     public List<Number> getMoreThanNum(double cmp) {
         return resultCollection.stream().filter(a -> a.doubleValue() >= cmp).collect(Collectors.toList());
     }

@@ -49,6 +49,10 @@ public class Calculator {
 
     //TODO 4. Calculator 클래스에 저장된 연산 결과들 중 가장 먼저 저장된 데이터를 삭제하는 기능을 가진 메서드를 구현
     public void removeResult() {
-        resultCollection.remove(0);
+        try {
+            resultCollection.remove(0);
+        } catch(IndexOutOfBoundsException e) {
+            System.out.println("저장된 계산 결과 값이 없습니다.");
+        }
     }
 }

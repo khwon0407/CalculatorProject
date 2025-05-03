@@ -33,10 +33,13 @@ public class CalculatorLv2 {
                 continue;
             }
 
+            //TODO. 계산기 클래스에 계산 과정 이양
             resultOptional = calculator.calculate(first, second, op);
+            
             if(resultOptional.isPresent()) {
                 Integer realResult = resultOptional.get();
                 System.out.println("계산 결과: " + realResult);
+                //계산 결과는 계산기 내부의 Collection에 저장됨
                 calculator.setResultCollection(realResult);
             }
             System.out.println("현재 저장 중인 값들의 목록: " + calculator.getResultCollection());
@@ -45,6 +48,7 @@ public class CalculatorLv2 {
             remove = scanner.next();
 
             if(remove.equals("yes")) {
+                //삭제를 원하면 삭제 이행
                 calculator.removeResult();
             }
 
